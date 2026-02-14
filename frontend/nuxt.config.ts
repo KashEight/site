@@ -21,7 +21,8 @@ export default defineNuxtConfig({
 		head: {
 			script: [
 				{
-					'innerHTML': 'window.nitroAds=window.nitroAds||{createAd:function(){return new Promise(e=>{window.nitroAds.queue.push(["createAd",arguments,e])})},addUserToken:function(){window.nitroAds.queue.push(["addUserToken",arguments])},queue:[]};',
+					'innerHTML':
+						'window.nitroAds=window.nitroAds||{createAd:function(){return new Promise(e=>{window.nitroAds.queue.push(["createAd",arguments,e])})},addUserToken:function(){window.nitroAds.queue.push(["addUserToken",arguments])},queue:[]};',
 					'data-cfasync': false
 				},
 				{
@@ -53,39 +54,55 @@ export default defineNuxtConfig({
 	},
 
 	hooks: {
-		'pages:extend': routes => {
-			const userSettings = routes.find(page => page.path === '/user-settings');
+		'pages:extend': (routes) => {
+			const userSettings = routes.find(
+				(page) => page.path === '/user-settings'
+			);
 
-			userSettings?.children?.push({ path: '/user-settings/profile', file: '~/pages/user-settings/index.vue' });
+			userSettings?.children?.push({
+				path: '/user-settings/profile',
+				file: '~/pages/user-settings/index.vue'
+			});
 
-			routes.push(...[
-				{
-					path: '/user/:user/edit',
-					file: '~/pages/user-settings.vue',
-					children: [
-						{ path: '', file: '~/pages/user-settings/index.vue' },
-						{ path: 'account', file: '~/pages/user-settings/account.vue' },
-						{ path: 'content', file: '~/pages/user-settings/content.vue' },
-						{ path: 'profile', file: '~/pages/user-settings/index.vue' },
-						{ path: 'accounts', file: '~/pages/user-settings/accounts.vue' },
-						{ path: 'api', file: '~/pages/user-settings/api.vue' }
-					]
-				},
-				{ path: '/g/:game/documents', file: '~/pages/documents.vue' },
-				{ path: '/g/:game/document/:document', file: '~/pages/document/[document].vue' }
-			]);
+			routes.push(
+				...[
+					{
+						path: '/user/:user/edit',
+						file: '~/pages/user-settings.vue',
+						children: [
+							{ path: '', file: '~/pages/user-settings/index.vue' },
+							{ path: 'account', file: '~/pages/user-settings/account.vue' },
+							{ path: 'content', file: '~/pages/user-settings/content.vue' },
+							{ path: 'profile', file: '~/pages/user-settings/index.vue' },
+							{ path: 'accounts', file: '~/pages/user-settings/accounts.vue' },
+							{ path: 'api', file: '~/pages/user-settings/api.vue' }
+						]
+					},
+					{ path: '/g/:game/documents', file: '~/pages/documents.vue' },
+					{
+						path: '/g/:game/document/:document',
+						file: '~/pages/document/[document].vue'
+					}
+				]
+			);
 
 			// Kinda disgusting, but other way is making components for each one of them and then pages...
-			const mod = routes.find(page => page.path === '/mod/:mod()');
-			mod?.children?.push({ path: '/mod/:mod/post/:comment', file: '~/pages/mod/[mod]/index.vue' });
+			const mod = routes.find((page) => page.path === '/mod/:mod()');
+			mod?.children?.push({
+				path: '/mod/:mod/post/:comment',
+				file: '~/pages/mod/[mod]/index.vue'
+			});
 
-			const thread = routes.find(page => page.path === '/thread/:thread()');
-			thread?.children?.push({ path: '/thread/:thread/post/:comment', file: '~/pages/thread/[thread]/index.vue' });
+			const thread = routes.find((page) => page.path === '/thread/:thread()');
+			thread?.children?.push({
+				path: '/thread/:thread/post/:comment',
+				file: '~/pages/thread/[thread]/index.vue'
+			});
 
-			const game = routes.find(page => page.path === '/g/:game()');
+			const game = routes.find((page) => page.path === '/g/:game()');
 
 			if (game && game.children) {
-				const gameAdmin = game.children.find(page => page.path === 'admin');
+				const gameAdmin = game.children.find((page) => page.path === 'admin');
 				if (gameAdmin && gameAdmin.children) {
 					gameAdmin.children.push(...[
 						{ path: 'bans', file: '~/pages/admin/bans/index.vue' },
@@ -186,13 +203,23 @@ export default defineNuxtConfig({
 			{ code: 'fr', language: 'fr-FR', file: 'fr.json', name: 'Français' },
 			{ code: 'it', language: 'it-IT', file: 'it.json', name: 'Italiano' },
 			{ code: 'pl', language: 'pl-PL', file: 'pl.json', name: 'Polski' },
-			{ code: 'pt-br', language: 'pt-BR', file: 'pt_BR.json', name: 'Português' },
+			{
+				code: 'pt-br',
+				language: 'pt-BR',
+				file: 'pt_BR.json',
+				name: 'Português'
+			},
 			{ code: 'ru', language: 'ru-RU', file: 'ru.json', name: 'Русский' },
 			{ code: 'tr', language: 'tr-TR', file: 'tr.json', name: 'Türkçe' },
 			{ code: 'zh-cn', language: 'zh-CN', file: 'zh_Hans.json', name: '中文' },
 			{ code: 'ko', language: 'ko-KR', file: 'ko.json', name: '한국어' },
 			{ code: 'ja', language: 'ja-JP', file: 'ja.json', name: '日本語' },
-			{ code: 'id', language: 'id-ID', file: 'id.json', name: 'Bahasa Indonesia' }
+			{
+				code: 'id',
+				language: 'id-ID',
+				file: 'id.json',
+				name: 'Bahasa Indonesia'
+			}
 		],
 
 		lazy: true,
@@ -232,6 +259,7 @@ export default defineNuxtConfig({
 		'@nuxtjs/fontaine',
 		'nuxt-easy-lightbox',
 		'nuxt-vitalizer',
-		'nuxt-seo-utils'
+		'nuxt-seo-utils',
+		'@nuxt/test-utils/module'
 	]
 });
